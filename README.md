@@ -1,0 +1,2 @@
+# checkers
+Arbitro damas
