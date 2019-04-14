@@ -2,7 +2,7 @@
 Arbitro damas
 
 # Reglas
-Las reglas del juego se encuentran descritas en el archivo pdf "ReglasDams.pdf"
+Las reglas del juego se encuentran descritas en el archivo pdf "ReglasDamas.pdf"
 
 # Manual
 El programa se debe ejecutar con el siguiente comando:
