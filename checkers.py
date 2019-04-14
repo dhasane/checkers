@@ -7,6 +7,8 @@ import threading
 import traceback
 import subprocess
 
+
+
 BLANCO='-'
 TOT=0
 J1={
@@ -235,6 +237,15 @@ P1=None
 P2=None
 PID=[]
 try:
+    f1 = os.path.isfile(sys.argv[1])
+    f2 = os.path.isfile(sys.argv[2])
+    if not( f1 ):
+        print "archivo ",sys.argv[1]," no encontrado"
+        exit()
+    if not( f2 ):
+        print "archivo ",sys.argv[2]," no encontrado"
+        exit()
+
     L=[sys.argv[1],sys.argv[2]]
     rand.shuffle(L)
     print L[0],"juega como X"
