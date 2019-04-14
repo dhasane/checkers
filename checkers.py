@@ -6,8 +6,7 @@ import os
 import threading
 import traceback
 import subprocess
-
-
+import signal
 
 BLANCO='-'
 TOT=0
@@ -207,17 +206,37 @@ def contarJugadores(tablero):
 
     return ganador
 
+
+class TimedOutExc(Exception):
+    pass
+
+def deadline(timeout, *args):
+    def decorate(f):
+        def handler(signum, frame):
+            raise TimedOutExc()
+
+        def new_f(*args):
+            signal.signal(signal.SIGALRM, handler)
+            signal.alarm(timeout)
+            return f(*args)
+            signal.alarm(0)
+
+        new_f.__name__ = f.__name__
+        return new_f
+    return decorate
+
 # realiza el llamado al jugador f para decidir la siguiente jugada, teniendo en cuenta el tiempo
 # en caso de superar MaxTime, se retorna None, de lo contrario retorna el movimiento seleccionado
 def race(f,MaxTime,*args):
     try:
+        @deadline(int(MaxTime))
+        def ff():
+            return f(*args)
         print f.__name__
         t1=time.time()
-        R=f(*args)
+        R=ff()
         t2=time.time() - t1
-        if t2 <=MaxTime:
-            return R, t2
-        return None, t2
+        return R, t2
     except:
         print "error en la ejecucion del jugador"
         return None, 0
@@ -244,7 +263,6 @@ try:
     if not( f2 ):
         print "archivo ",sys.argv[2]," no encontrado"
         exit()
-
     L=[sys.argv[1],sys.argv[2]]
     rand.shuffle(L)
     print L[0],"juega como X"
