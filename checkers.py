@@ -5,6 +5,7 @@ import random as rand
 import os
 import threading
 import traceback
+import subprocess
 
 BLANCO='-'
 TOT=0
@@ -56,9 +57,9 @@ def crearJugador(arg):#arg es el nombre del archivo que describe el jugador//ret
         pipename="pipe"+arg
     os.mkfifo(pipename+'T')
     os.mkfifo(pipename+'M')
-    thr = playThread(command)
-    thr.start()
-
+    #thr = playThread(command)
+    #thr.start()
+    pid=subprocess.Popen(command,stdout=subprocess.PIPE, shell=True)
     def playerPipe(E,J):
         pipeT=open(pipename+'T','w')
         pipeT.write(tableToString(E)+':'+J)
@@ -66,7 +67,7 @@ def crearJugador(arg):#arg es el nombre del archivo que describe el jugador//ret
         pipeM=open(pipename+'M','r')
         l=pipeM.readline()
         return stringToMove(l)
-    return playerPipe,thr
+    return playerPipe,pid
 
 def stringToMove(str):
     str=str[:len(str)-1]
@@ -221,18 +222,18 @@ def race(f,MaxTime,*args):
         return None, 0
 '''
 T=[
-['x','-','-','-','-','-','-','-'],
-['-','x','-','-','-','-','-','x'],
-['-','-','x','-','x','-','x','-'],
-['-','-','-','-','-','x','-','x'],
-['o','-','-','-','o','-','o','-'],
-['-','-','-','o','-','-','-','o'],
-['o','-','-','-','-','-','-','-'],
-['-','o','-','o','-','-','-','-']
+['x','-','x','-','x','-','x','-'],
+['-','x','-','x','-','x','-','x'],
+['x','-','x','-','x','-','x','-'],
+['-','-','-','-','-','-','-','-'],
+['-','-','-','-','-','-','-','-'],
+['-','o','-','o','-','o','-','o'],
+['o','-','o','-','o','-','o','-'],
+['-','o','-','o','-','o','-','o']
 ]'''
 P1=None
 P2=None
-THR=[]
+PID=[]
 try:
     L=[sys.argv[1],sys.argv[2]]
     rand.shuffle(L)
@@ -242,14 +243,14 @@ try:
         exec("import "+L[0][:len(L[0])-3]+" as LP1")
         P1=LP1.player
     else:
-        P1,thr=crearJugador(L[0])
-        THR+=[thr]
+        P1,pid=crearJugador(L[0])
+        PID+=[pid]
     if L[1][len(L[1])-3:]=='.py':
         exec("import "+L[1][:len(L[1])-3]+" as LP2")
         P2=LP2.player
     else:
-        P2,thr=crearJugador(L[1])
-        THR+=[thr]
+        P2,pid=crearJugador(L[1])
+        PID+=[pid]
     if len(sys.argv)>3:
         MaxTime=float(sys.argv[3])
     else:
@@ -368,7 +369,7 @@ print "partida terminada en ", k, " turnos   tiempo total : ",tiempoTotal
 
 
 os.system("rm pipe*")
-for thr in THR:
-     thr.join()
+for pid in PID:
+    pid.kill()
 sys.exit()
 print "...."
