@@ -220,7 +220,6 @@ def race(f,MaxTime,*args):
         return None, t2
     except:
         print "error en la ejecucion del jugador"
-        traceback.print_exc()
         return None, 0
 '''
 T=[
