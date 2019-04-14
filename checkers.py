@@ -232,7 +232,6 @@ def race(f,MaxTime,*args):
         @deadline(int(MaxTime))
         def ff():
             return f(*args)
-        print f.__name__
         t1=time.time()
         R=ff()
         t2=time.time() - t1
