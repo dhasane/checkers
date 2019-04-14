@@ -228,6 +228,11 @@ def deadline(timeout, *args):
 # realiza el llamado al jugador f para decidir la siguiente jugada, teniendo en cuenta el tiempo
 # en caso de superar MaxTime, se retorna None, de lo contrario retorna el movimiento seleccionado
 def race(f,MaxTime,*args):
+    if MaxTime==float('inf'):
+        t1=time.time()
+        R=f(*args)
+        t2=time.time() - t1
+        return R,t2
     try:
         @deadline(int(MaxTime))
         def ff():
