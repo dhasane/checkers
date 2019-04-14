@@ -11,7 +11,7 @@ El programa se debe ejecutar con el siguiente comando:
 ## archivo ##
 -Puede ser un archivo .py .jar o un ejecutable el cual describe el comportamiento del jugador
 ## [time] ##
-Es el tiempo maximo del que dispone un jugador antes de que se considere como derrotado
+Es el tiempo maximo del que dispone un jugador antes de que se considere como derrotado. De no ser especificado este es ilimitado
 
 # Entregable
 Los siguientes son los requerimientos de los archivos que recibe el comando descrito anteriormente
