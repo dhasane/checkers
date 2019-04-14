@@ -56,3 +56,9 @@ Jugada=[(0,0),(2,2),(4,4)]
 #significa que la ficha en (0,0) se mueve a (2,2) y luego a (4,4) tomando dos piezas
 mensaje='0,0;2,2;4,4'
 </code></pre>
+
+### Interaccion ###
+Las interacciones seran las siguientes:
+1. El arbitro envia el estado del tablero al jugador y espera a su respuesta.
+2. El jugador envia la jugada decidida.
+3. El proceso se repite hasta que haya un ganador.
