@@ -33,7 +33,7 @@ En este caso el archivo en cuestion correra sobre un proceso a parte y se comuni
 
 ### Sintaxix en los pipes ###
 #### pipe\<nombre del archivo\>T ####
-Por este pipe se enviaran los caracteres que representan el tablero ('x','X','o','O','-') sin incluir las casillas donde no pueden haber fichas (las casillas cuyas coordenadas suman un numero par). seguido de el estado del tablero se envia el caracter ':' y un caracter que representa con que fichas juega el jugador. ej:
+Por este pipe se enviaran los caracteres que representan el tablero ('x','X','o','O','-') sin incluir las casillas donde no pueden haber fichas (las casillas cuyas coordenadas en X y en Y suman un numero par). seguido de el estado del tablero se envia el caracter ':' y un caracter que representa con que fichas juega el jugador. ej:
 <pre><code>
 tablero=[
 ['x','-','x','-','x','-','x','-'],
