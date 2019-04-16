@@ -29,21 +29,7 @@ J2={
         'O':[(1,1),(1,-1),(-1,1),(-1,-1)]
     }
 }
-class playThread(threading.Thread):
 
-    def __init__(self,command, name='TestThread'):
-        """ constructor, setting initial variables """
-        self._stopevent = threading.Event(  )
-        self._sleepperiod = 1.0
-        self.command=command
-        threading.Thread.__init__(self, name=name)
-
-    def run(self):
-        os.system(self.command)
-
-    def join(self, timeout=None):
-        self._stopevent.set(  )
-        threading.Thread.join(self, timeout)
 #__________________________________________________________________________________________
 def crearJugador(arg):#arg es el nombre del archivo que describe el jugador//retorna la funcion del jugador y el nombre del jugador
     command=""
@@ -228,19 +214,20 @@ def deadline(timeout, *args):
 # realiza el llamado al jugador f para decidir la siguiente jugada, teniendo en cuenta el tiempo
 # en caso de superar MaxTime, se retorna None, de lo contrario retorna el movimiento seleccionado
 def race(f,MaxTime,*args):
-    if MaxTime==float('inf'):
-        t1=time.time()
-        R=f(*args)
-        t2=time.time() - t1
-        return R,t2
     try:
-        @deadline(int(MaxTime))
-        def ff():
-            return f(*args)
-        t1=time.time()
-        R=ff()
-        t2=time.time() - t1
-        return R, t2
+        if MaxTime==float('inf'):
+            t1=time.time()
+            R=f(*args)
+            t2=time.time() - t1
+            return R,t2
+        else:
+            @deadline(int(MaxTime))
+            def ff():
+                return f(*args)
+            t1=time.time()
+            R=ff()
+            t2=time.time() - t1
+            return R, t2
     except:
         print "error en la ejecucion del jugador"
         return None, 0
@@ -290,7 +277,6 @@ try:
 except Exception, err:
     print "uso:python checkers.py <lib1.py> <lib2.py> [maxtime(segundos)]"
     os.system("rm pipe*")
-    traceback.print_exc()
     exit()
 
 memoria = 20    # cantidad de tableros guardados para revisar ciclos
@@ -304,6 +290,7 @@ k=0             # contador de turnos en la partida
 M  = []         # lista de movimientos posibles
 tiempo = 0
 tiempoTotal = time.time()
+TJ1=0
 while not fin:
 
     # jugadas posibles jugador 1
@@ -314,6 +301,7 @@ while not fin:
     if not fin:
         # turno jugador 1
         m, tiempo = race(P1,MaxTime,tablero,'X')
+        TJ1+=tiempo
         if m in M:
             tablero=makeMove(tablero,m,J1)
 
@@ -398,10 +386,9 @@ elif ganador == 2:
 else:
     print "empate"
 print "partida terminada en ", k, " turnos   tiempo total : ",tiempoTotal
-
+print "tiempos por jugador: ",L[0],": ",TJ1,L[1],": ",tiempoTotal-TJ1
 
 os.system("rm pipe*")
 for pid in PID:
     pid.kill()
 sys.exit()
-print "...."
