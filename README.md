@@ -16,7 +16,7 @@ Es el tiempo maximo del que dispone un jugador antes de que se considere como de
 # Entregable
 Los siguientes son los requerimientos de los archivos que recibe el comando descrito anteriormente
 ## Para archivos .py ##
-El archivo debe definir una funcion __play(E,J)__ donde E es el estado del tablero representado por una matriz de caracteres con dimensiones de 8x8 (char[8][8]) dicha representacion se realiza de la siguiente manera:
+El archivo debe definir una funcion __player(E,J)__ donde E es el estado del tablero representado por una matriz de caracteres con dimensiones de 8x8 (char[8][8]) dicha representacion se realiza de la siguiente manera:
 1. 'x':representa fichas blancas normales.
 2. 'X':representa fichas blancas coronadas.
 3. 'o':representa fichas negras normales.
