@@ -49,7 +49,7 @@ Jugador='X'
 mensaje='xxxxxxxxxxxx--------oooooooooooo:X'
 </code></pre>
 
-#### pipe\<nombre del archivo\>T ####
+#### pipe\<nombre del archivo\>M ####
 Por este pipe se enviaran las jugadas que decida realizar el jugador, representadas por las posiciones que toma la pieza en la jugada separadas por ';', donde una posicion esta representada por dos coordenadas separadas por ',' y representadas por numeros o letras
 <pre><code>
 Jugada=[(0,0),(2,2),(4,4)]
